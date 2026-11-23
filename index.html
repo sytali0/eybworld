@@ -124,10 +124,6 @@
     background: #22252f;
     border-color: rgba(241, 78, 11, 0.45);
   }
-  .btn-save {
-    background: #ffffff;
-    color: #141518;
-  }
   .btn-icon {
     width: 40px;
     height: 40px;
@@ -137,10 +133,6 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-  }
-  .btn-save .btn-icon {
-    background: rgba(241, 78, 11, 0.12);
-    color: #F14E0B;
   }
   .btn-text { display: flex; flex-direction: column; }
   .btn-title { font-size: 15px; font-weight: 700; line-height: 1.2; }
@@ -248,18 +240,6 @@
           </div>
           <span class="btn-arrow">›</span>
         </a>
-
-        <!-- 4. Rehbere Kaydet (vCard) -->
-        <a class="btn btn-save" id="saveVcard" href="#">
-          <div class="btn-icon">
-            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-          </div>
-          <div class="btn-text">
-            <span class="btn-title">Rehbere Kaydet</span>
-            <span class="btn-sub" id="saveSub">EYB WORLD iletişim kartını indir</span>
-          </div>
-          <span class="btn-arrow">›</span>
-        </a>
       </div>
 
       <a class="address-card" href="https://maps.google.com/?q=Lalapa%C5%9Fa+Mah.+Cumhuriyet+Cad.+Yakutiye+Erzurum" target="_blank" rel="noopener">
@@ -276,12 +256,12 @@
 
   <script>
     const FOUNDERS = {
-      e: { fn: "Emirhan Yaşar", n: "Yaşar;Emirhan;;;", file: "EYB_World_Emirhan_Yasar.vcf" },
-      emirhan: { fn: "Emirhan Yaşar", n: "Yaşar;Emirhan;;;", file: "EYB_World_Emirhan_Yasar.vcf" },
-      o: { fn: "Ömer Faruk Badur", n: "Badur;Ömer Faruk;;;", file: "EYB_World_Omer_Faruk_Badur.vcf" },
-      omer: { fn: "Ömer Faruk Badur", n: "Badur;Ömer Faruk;;;", file: "EYB_World_Omer_Faruk_Badur.vcf" },
-      k: { fn: "Ekrem Ekmekçi", n: "Ekmekçi;Ekrem;;;", file: "EYB_World_Ekrem_Ekmekci.vcf" },
-      ekrem: { fn: "Ekrem Ekmekçi", n: "Ekmekçi;Ekrem;;;", file: "EYB_World_Ekrem_Ekmekci.vcf" }
+      e: { fn: "Emirhan Yaşar" },
+      emirhan: { fn: "Emirhan Yaşar" },
+      o: { fn: "Ömer Faruk Badur" },
+      omer: { fn: "Ömer Faruk Badur" },
+      k: { fn: "Ekrem Ekmekçi" },
+      ekrem: { fn: "Ekrem Ekmekçi" }
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -292,36 +272,7 @@
       document.title = person.fn + " — EYB WORLD";
       document.getElementById("founderName").textContent = person.fn.toLocaleUpperCase("tr-TR");
       document.getElementById("founderBadge").classList.add("active");
-      document.getElementById("saveSub").textContent = person.fn + " iletişim kartını indir";
     }
-
-    document.getElementById("saveVcard").addEventListener("click", function(e) {
-      e.preventDefault();
-      const lines = [
-        "BEGIN:VCARD",
-        "VERSION:3.0",
-        "FN:" + (person ? person.fn + " — EYB WORLD" : "EYB WORLD Gayrimenkul")
-      ];
-      if (person) {
-        lines.push("N:" + person.n);
-        lines.push("TITLE:Kurucu");
-      }
-      lines.push(
-        "ORG:EYB WORLD;Gayrimenkul | Yatırım | Danışmanlık",
-        "TEL;TYPE=CELL,VOICE:+905050272625",
-        "URL:" + window.location.href,
-        "URL;TYPE=Instagram:https://www.instagram.com/eybworld/",
-        "ADR;TYPE=WORK:;;Lalapaşa Mah. Cumhuriyet Cad.;Yakutiye;Erzurum;;Türkiye",
-        "END:VCARD"
-      );
-      const blob = new Blob([lines.join("\r\n")], { type: "text/vcard;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = person ? person.file : "EYB_World.vcf";
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
   </script>
 </body>
 </html>
